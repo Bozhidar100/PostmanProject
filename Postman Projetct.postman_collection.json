@@ -910,15 +910,9 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.sendRequest({\r",
-											"    url: '{{BaseURL}}users/15',\r",
-											"    method: 'DELETE',\r",
-											"}, function (err, res) {\r",
-											"    pm.test(\"Status code is 200\", function () {\r",
-											"        pm.response.to.have.status(200);\r",
-											"    });\r",
-											"});\r",
-											""
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {}
