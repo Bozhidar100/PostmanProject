@@ -77,6 +77,21 @@
 					"item": [
 						{
 							"name": "all users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.response.to.have.status(200);\r",
+											"pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"pm.expect(pm.response.text()).to.not.be.empty;\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
