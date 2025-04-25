@@ -26,10 +26,16 @@ jobs:
             --environment PostmanGroupProject.postman_environment.json \
             --reporters cli,junit \
             --reporter-junit-export results.xml
-      - name: Run "Cart Workflow" fodler with products.json
+      - name: Run "Cart Workflow" folder with products.json
         run: |
           newman --version
           newman run Projetct.postman_collection.json --folder "Cart Workflow" -d TestingData/products.json \
+          --reporters cli,junit \
+          --reporter-junit-export results.xml
+      - name: Run "Authentication" folder with all existing users inside user-logins.json
+        run: |
+          newman --version
+          newman run Projetct.postman_collection.json --folder "Auth" -d TestingData/user-logins.json \
           --reporters cli,junit \
           --reporter-junit-export results.xml
       - name: Upload test report
