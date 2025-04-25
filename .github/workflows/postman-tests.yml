@@ -59,7 +59,8 @@ jobs:
           name: newman-report
           path: report.html
 Data-Driven_Login_Testing:
-  runs-on: Run Login Testing Data Driven testing
+  name: Run Login Testing Data Driven testing
+  runs-on: ubuntu-latest
   steps:
     - name: Checkout code
       uses: actions/checkout@v4
