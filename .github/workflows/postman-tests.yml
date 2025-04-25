@@ -8,7 +8,8 @@ on:
     - cron: "40 19 * * *"
 
 jobs:
-  whole-collection-single_run-tests:
+  whole-collection-single-run-tests:
+    name: Run the whole colletion's calls once
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -34,6 +35,7 @@ jobs:
           path: report.html
 
   Cart_Workflow_Data_Driven_Testing:
+    name: Run Cart Workflow folder using Data Driven testing
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -57,7 +59,7 @@ jobs:
           name: newman-report
           path: report.html
 Data-Driven_Login_Testing:
-  runs-on: ubuntu-latest
+  runs-on: Run Login Testing Data Driven testing
   steps:
     - name: Checkout code
       uses: actions/checkout@v4
