@@ -1,0 +1,40 @@
+name: Run Postman Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "40 19 * * *"
+
+jobs:
+  run-postman-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install Newman and HTML reproter
+        run: npm install -g newman newman-reporter-html
+      - name: Run Collection's tests
+        run: |
+          newman --version
+          newman run Projetct.postman_collection.json \
+            --environment PostmanGroupProject.postman_environment.json \
+            --reporters cli,junit \
+            --reporter-junit-export results.xml
+      - name: Run "Cart Workflow" fodler with products.json
+        run: |
+          newman --version
+          newman run Projetct.postman_collection.json --folder "Cart Workflow" -d TestingData/products.json \
+          --reporters cli,junit \
+          --reporter-junit-export results.xml
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newman-report
+          path: report.html
