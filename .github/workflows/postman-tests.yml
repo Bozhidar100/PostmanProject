@@ -25,7 +25,7 @@ jobs:
           newman --version
           newman run Projetct.postman_collection.json \
             --environment PostmanGroupProject.postman_environment.json \
-            --reporters cli,junit \
+            --reporters cli,junit,html \
             --reporter-junit-export results.xml \
             --reporter-html-export report.html
       - name: Upload test report
@@ -51,7 +51,7 @@ jobs:
         run: |
           newman --version
           newman run Projetct.postman_collection.json --folder "Cart Workflow" -d TestingData/products.json \
-            --reporters cli,junit \
+            --reporters cli,junit,html \
             --reporter-junit-export results.xml \
             --reporter-html-export report.html
       - name: Upload test report
@@ -78,7 +78,7 @@ jobs:
         run: |
           newman --version
           newman run Projetct.postman_collection.json --folder "Auth" -d TestingData/user-logins.json \
-            --reporters cli,junit \
+            --reporters cli,junit,html \
             --reporter-junit-export results.xml \ 
             --reporter-html-export report.html
       - name: Upload test report
