@@ -1,0 +1,89 @@
+name: Run Postman Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "40 19 * * *"
+
+jobs:
+  whole-collection-single-run-tests:
+    name: Run the whole colletion's calls once
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install Newman and HTML reproter
+        run: npm install -g newman newman-reporter-html
+      - name: Run Collection's tests
+        run: |
+          newman --version
+          newman run Projetct.postman_collection.json \
+            --environment PostmanGroupProject.postman_environment.json \
+            --reporters cli,junit \
+            --reporter-junit-export results.xml \
+            --reporter-html-export report.html
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newman-report
+          path: report.html
+
+  Cart_Workflow_Data_Driven_Testing:
+    name: Run Cart Workflow folder using Data Driven testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install Newman and HTML reproter
+        run: npm install -g newman newman-reporter-html
+      - name: Run "Cart Workflow" folder with products.json
+        run: |
+          newman --version
+          newman run Projetct.postman_collection.json --folder "Cart Workflow" -d TestingData/products.json \
+            --reporters cli,junit \
+            --reporter-junit-export results.xml \
+            --reporter-html-export report.html
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cart-workflow-report
+          path: report.html
+
+  Data-Driven_Login_Testing:
+    name: Run Login Testing Data Driven testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install Newman and HTML reproter
+        run: npm install -g newman newman-reporter-html
+
+      - name: Run "Authentication" folder with all existing users inside user-logins.json
+        run: |
+          newman --version
+          newman run Projetct.postman_collection.json --folder "Auth" -d TestingData/user-logins.json \
+            --reporters cli,junit \
+            --reporter-junit-export results.xml \ 
+            --reporter-html-export report.html
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: auth-workflow-report
+          path: report.html
